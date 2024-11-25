@@ -13,7 +13,7 @@ const Login = ({ onLoginSuccess }) => {
                 username,
                 password,
             });
-            localStorage.setItem('token', response.data.token); // Save token in localStorage
+            localStorage.setItem('token', response.data.token); 
             onLoginSuccess();
         } catch (err) {
             setError('Invalid username or password');

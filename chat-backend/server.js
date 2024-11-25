@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Message = require('./models/Message');
 const authRoutes = require('./Routes/auth');
+const cors = require('cors');
 
 dotenv.config();
 const app = express();
@@ -12,6 +13,7 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
 // Middleware
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use('/auth', authRoutes);
 

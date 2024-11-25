@@ -19,10 +19,23 @@ const Register = () => {
             setPassword('');
             setError('');
         } catch (err) {
-            setError('Registration failed. Try a different username.');
+            if (err.response) {
+                // Server responded with a status other than 2xx
+                if (err.response.status === 409) {
+                    setError('Username already exists. Try a different username.');
+                } else {
+                    setError('Server error. Please try again later.');
+                }
+            } else if (err.request) {
+                // Request was made but no response received
+                setError('Network error. Please check your connection.');
+            } else {
+                // Something went wrong setting up the request
+                setError('An unexpected error occurred. Please try again.');
+            }
         }
-    };
-
+    };    
+    
     return (
         <form onSubmit={handleRegister} className="max-w-md mx-auto p-4 bg-white shadow-md rounded">
             <h2 className="text-lg font-bold mb-4">Register</h2>
